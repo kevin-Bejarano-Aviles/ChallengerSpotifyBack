@@ -4,7 +4,7 @@ import { FavoriteSongs } from './FavoriteSongs';
 @Entity()
 export class User {
     @PrimaryColumn({
-        type:'varchar'
+        type:'uuid'
     })
     id!: string
 
