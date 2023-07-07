@@ -8,6 +8,7 @@ function bootstrap (server: iServer, dbConnection: iDatabase) {
   server.start();
 
   dbConnection.start();
+  
 }
 
 bootstrap(expressServer, mysqlConnection);

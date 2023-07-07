@@ -13,17 +13,18 @@ class MySqlConnection implements iDatabase {
     constructor() {
         this.dataSource = new DataSource({
             type: 'mysql',
+            // host:'localhost',
             host: process.env.DB_HOST,
             port: Number(process.env.DB_PORT),
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
-            logging:true,
+            logging:false,
             entities: [path.join(__dirname, String(process.env.TYPEORM_ENTITY_PATH))],
             migrations: [],
             synchronize:true,
         })
-    }
+    };
 
     public dataMysql (){
         return this.dataSource;
