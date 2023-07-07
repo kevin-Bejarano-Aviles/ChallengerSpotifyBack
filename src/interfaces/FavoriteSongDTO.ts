@@ -1,7 +1,11 @@
 export interface FavoriteSongsDTO {
-    trackName:string,
+    id:string;
+    track_name:string,
     artist_names:string[],
     album:string,
-    urlTrack: string,
+    url_track: string,
+    duration_ms:string,
+    image_preview_max:string,
+    image_preview_min:string,
     userId: string
 }
