@@ -4,6 +4,7 @@ import { findAllUser, findOneUser } from '../methods/user.methods';
 import { FavoriteSongsDTO,UserReq } from "../interfaces";
 import { createFavoriteSong, deleteSong, findAllFavoriteSongsOfUser, findAndCountFavoriteSongs, findOneFavoriteSongForUser } from '../methods/favoriteSongs.methods';
 import { getTopTracks } from '../helpers/apiSpotify/getTopTracks';
+import { filterProps } from '../helpers/apiSpotify/filterProps';
 
 
 
@@ -69,18 +70,7 @@ export const spotifyTopTracks = async(req:Request,res:Response)=>{
 
         
         const data = await getTopTracks(+limit,+offset,userReq.accessToken)
-        const tracks = data?.items.map(item =>{
-            return  {   
-                        id: item.id,
-                        artist_names: item.artists.map(item=>{return item.name}),
-                        track_name:item.name,
-                        album:item.album.name,
-                        url_track: item.external_urls.spotify,
-                        image_preview_max: item.album.images[1].url,
-                        image_preview_min: item.album.images[2].url,
-                        duration_ms:item.duration_ms
-                    }
-        });
+        const tracks = filterProps(data)
         return res.status(200).json({
                 tracks:tracks,
                 limit:+limit,
@@ -146,11 +136,6 @@ export const allTracksOfDb = async(req:Request,res:Response)=>{
             });
         } 
         const [tracks,number] = await findAllFavoriteSongsOfUser(user.id,+limit,+offset);
-        /* if(tracks.length<=0){
-            return res.status(200).json({
-                msg:'user without songs in the bd'
-            });
-        } */
         const newTracks = tracks.map(track => {
             return { ...track, artist_names:JSON.parse(track.artist_names)}
             
@@ -206,11 +191,6 @@ export const searchSongOnDb = async(req:Request,res:Response) =>{
                 tracks:arrayVoid
             })
         }
-        /* if(tracks.length <= 0){
-            return res.status(200).json({
-                mgs: `not song with the search ${q}`
-            });
-        } */
         return res.status(200).json({
             tracks,
             total

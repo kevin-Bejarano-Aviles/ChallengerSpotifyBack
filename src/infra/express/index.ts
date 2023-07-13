@@ -15,8 +15,6 @@ class ExpressServer implements iServer {
     
     start() {
         passport.serializeUser(function(user:any,done){
-            console.log(user.accessToken);
-            
            return done(null,{
             id:user.id,
             accessToken:user.accessToken})//esto es lo que se guarda en la session
