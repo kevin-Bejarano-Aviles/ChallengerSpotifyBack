@@ -16,10 +16,6 @@ export const passportUse =() =>{
                 
             },
             async (accessToken, refreshToken, expires_in, profile, done)=>{
-                // expires_in = 120
-                // console.log(expires_in);
-                expires_in=5000;
-                // console.log(expires_in);
                 
                 const user = await findByEmailOrCreateUser(profile.displayName,profile._json.email);
                 
@@ -29,7 +25,6 @@ export const passportUse =() =>{
                     userName:user.user_name,
                     accessToken
                 }
-                // console.log(customProfile);
                 
                 return done(null,customProfile);//?customProfile guarda lo que se guarda en la session
 

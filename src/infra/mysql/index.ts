@@ -13,7 +13,6 @@ class MySqlConnection implements iDatabase {
     constructor() {
         this.dataSource = new DataSource({
             type: 'mysql',
-            // host:'localhost',
             host: process.env.DB_HOST,
             port: Number(process.env.DB_PORT),
             username: process.env.DB_USER,
@@ -35,7 +34,6 @@ class MySqlConnection implements iDatabase {
         }
         return MySqlConnection.instance;
     }
-
     public start() {
         this.dataSource.initialize()
             .then(() => logger.info('Database connection successfully.'))

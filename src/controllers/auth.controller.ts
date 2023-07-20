@@ -3,22 +3,22 @@ import { logger } from '../infra/logger';
 import { UserReq } from '../interfaces/UserReq';
 
 
-
 export const login = (req:Request,res:Response)=>{
     try {
         
         const user = req.user as UserReq;
-        
+        if(user){
+            return res.status(200).json({
+                user:{
+                    id:user.id,
+                    userName:user.user_name,
+                    email:user.email
+                },
+                logged:true      
+            });
+        }
         return res.status(200).json({
-            
-            user:{
-                id:user.id,
-                userName:user.user_name,
-                email:user.email
-            }/* {
-                id:user.id,
-                userName:user.userName
-            }     */       
+            logged:false
         });
     } catch (error) {
         logger.error(error as string);

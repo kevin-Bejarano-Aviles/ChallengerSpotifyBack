@@ -7,7 +7,7 @@ import passport from 'passport';
 import path from 'path';
 import cors from 'cors';
 import session from 'express-session';
-import { passportUse } from '../../helpers/passport/possportUse';
+import { passportUse } from '../../helpers/passport/passportUse';
 import { findOneUser } from '../../methods/user.methods';
 
 class ExpressServer implements iServer {
@@ -44,11 +44,13 @@ class ExpressServer implements iServer {
         this.appServer.use(session(
             {
                 secret:'gatoperro',
-                resave:true,
+                resave:false,
                 saveUninitialized:false,
                 cookie:{
                     secure: false,
-                    /* maxAge: 36000, */
+                    maxAge:3600000,
+                    // maxAge: 3600000,
+                    // httpOnly:true
                 },
                 name:'cookie-spotify'
             }
@@ -64,6 +66,9 @@ class ExpressServer implements iServer {
         }))
         this.appServer.use(express.json())
         this.appServer.use('/api', routes);
+        /* this.appServer.get('*', (req, res) => {
+            res.sendFile(path.resolve(__dirname, 'http://localhost:3000'));
+          }); */
 
         const port = config.port;
   

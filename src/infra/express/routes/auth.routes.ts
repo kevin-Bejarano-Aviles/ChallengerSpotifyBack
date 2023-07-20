@@ -5,7 +5,7 @@ import { isAuthentticated } from '../../../middleware/isAuthenticated';
 
 const authRouter = Router();
 
-authRouter.get('/login',isAuthentticated,login)
+authRouter.get('/logged',login)
 
 authRouter.get('/login/spotify',passport.authenticate('spotify',{
     scope: ['user-top-read','user-read-email', 'user-read-private'],
@@ -14,7 +14,7 @@ authRouter.get('/login/spotify',passport.authenticate('spotify',{
 authRouter.get('/login/spotify/callback',passport.authenticate('spotify',{
     // failureFlash:'/api/home',
     successRedirect:'http://localhost:3000'
-    // successRedirect:'/api/auth/login'
+    // successRedirect:'/api/auth/logged'
 }));
 
 
